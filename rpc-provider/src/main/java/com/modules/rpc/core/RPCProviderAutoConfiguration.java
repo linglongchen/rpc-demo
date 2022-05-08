@@ -31,6 +31,6 @@ public class RPCProviderAutoConfiguration {
         //获取注册类型，是consul、nacos、erueka、zookeeper等注册中心
         RegistryTypeEnum type = RegistryTypeEnum.valueOf(rpcProperties.getRegistryType());
         RegistryService serviceRegistry = RegistryFactory.getInstance(rpcProperties.getRegistryAddr(), type);
-        return new RPCProviderBean(rpcProperties.getServicePort(), serviceRegistry,rpcProperties.getServerPort());
+        return new RPCProviderBean(rpcProperties.getServicePort(), serviceRegistry);
     }
 }

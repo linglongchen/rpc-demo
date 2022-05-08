@@ -22,12 +22,11 @@ public class ServiceMeta {
     /**
      * 服务url
      */
-    private String serviceAddr;
+    private String serviceAddress;
 
     /**
      * 服务port
      */
     private int servicePort;
 
-    private int serverPort;
 }

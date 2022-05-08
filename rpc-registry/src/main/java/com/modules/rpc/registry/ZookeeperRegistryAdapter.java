@@ -48,7 +48,7 @@ public class ZookeeperRegistryAdapter implements RegistryService{
         ServiceInstance<ServiceMeta> serviceInstance = ServiceInstance
                 .<ServiceMeta>builder()
                 .name(RpcServiceHelper.buildServiceKey(serviceMeta.getServiceName(), serviceMeta.getServiceVersion()))
-                .address(serviceMeta.getServiceAddr())
+                .address(serviceMeta.getServiceAddress())
                 .port(serviceMeta.getServicePort())
                 .payload(serviceMeta)
                 .build();

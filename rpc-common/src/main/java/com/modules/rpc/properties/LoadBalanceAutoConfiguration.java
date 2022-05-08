@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.Resource;
 
+
 /**
  * @author chenlingl
  * @version 1.0

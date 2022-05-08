@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @date 2022/1/24 18:21
  */
 @Data
-@ConfigurationProperties(prefix = "lb")
+@ConfigurationProperties(prefix = "rpc")
 public class LoadBalanceProperties {
     private String loadBalance;
 }

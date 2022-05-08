@@ -33,19 +33,15 @@ import java.util.concurrent.*;
 @Slf4j
 public class RPCProviderBean implements InitializingBean, BeanPostProcessor {
     /**
-     * 服务url
+     * 服务提供者url
      */
     private String serviceAddress;
     /**
      * 服务端口
      */
-    private final int port;
+    private final int servicePort;
     /**
-     * 服务端口
-     */
-    private int serverPort;
-    /**
-     * 注册对外接口
+     * 注册中心地址
      */
     private final RegistryService serviceRegistry;
 
@@ -54,10 +50,9 @@ public class RPCProviderBean implements InitializingBean, BeanPostProcessor {
      */
     private final Map<String, Object> rpcServiceMap = new HashMap<>();
 
-    public RPCProviderBean(int port, RegistryService registryService,int serverPort) {
-        this.port = port;
+    public RPCProviderBean(int servicePort, RegistryService registryService) {
+        this.servicePort = servicePort;
         this.serviceRegistry = registryService;
-        this.serverPort = serverPort;
     }
 
     @Override
@@ -81,11 +76,10 @@ public class RPCProviderBean implements InitializingBean, BeanPostProcessor {
             String serviceVersion = rpcService.serviceVersion();
             try {
                 ServiceMeta serviceMeta = new ServiceMeta();
-                serviceMeta.setServiceAddr(this.serviceAddress);
-                serviceMeta.setServicePort(this.port);
+                serviceMeta.setServiceAddress(this.serviceAddress);
+                serviceMeta.setServicePort(this.servicePort);
                 serviceMeta.setServiceName(interfaceName);
                 serviceMeta.setServiceVersion(serviceVersion);
-                serviceMeta.setServerPort(serverPort);
                 //注册到注册中心
                 serviceRegistry.register(serviceMeta);
                 rpcServiceMap.put(RpcServiceHelper.buildServiceKey(serviceMeta.getServiceName(), serviceMeta.getServiceVersion()),bean);
@@ -119,8 +113,8 @@ public class RPCProviderBean implements InitializingBean, BeanPostProcessor {
                         }
                     })
                     .childOption(ChannelOption.SO_KEEPALIVE,true);
-            ChannelFuture channelFuture = bootstrap.bind(this.serviceAddress,this.port).sync();
-            log.info("=========server address {} started on port {}=================", this.serviceAddress, this.port);
+            ChannelFuture channelFuture = bootstrap.bind(this.serviceAddress,this.servicePort).sync();
+            log.info("=========server address {} started on port {}=================", this.serviceAddress, this.servicePort);
             channelFuture.channel().closeFuture().sync();
         }finally {
             boss.shutdownGracefully();

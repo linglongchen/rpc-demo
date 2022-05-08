@@ -51,12 +51,12 @@ public class RPCConsumer {
         int invokeHashCode = params.length > 0 ? params[0].hashCode() : serviceKey.hashCode();
         ServiceMeta serviceMeta = registryService.discovery(serviceKey,invokeHashCode);
         if (null != serviceMeta) {
-            ChannelFuture future = bootstrap.connect(serviceMeta.getServiceAddr(), serviceMeta.getServicePort()).sync();
+            ChannelFuture future = bootstrap.connect(serviceMeta.getServiceAddress(), serviceMeta.getServicePort()).sync();
             future.addListener((ChannelFutureListener) args -> {
                 if (future.isSuccess()) {
-                    log.info("============connect rpc server {} on port {} success.============", serviceMeta.getServiceAddr(), serviceMeta.getServicePort());
+                    log.info("============connect rpc server {} on port {} success.============", serviceMeta.getServiceAddress(), serviceMeta.getServicePort());
                 } else {
-                    log.error("===========connect rpc server {} on port {} failed.=============", serviceMeta.getServiceAddr(), serviceMeta.getServicePort());
+                    log.error("===========connect rpc server {} on port {} failed.=============", serviceMeta.getServiceAddress(), serviceMeta.getServicePort());
                     future.cause().printStackTrace();
                     eventLoopGroup.shutdownGracefully();
                 }
