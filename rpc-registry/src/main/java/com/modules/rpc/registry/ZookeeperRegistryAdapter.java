@@ -66,7 +66,6 @@ public class ZookeeperRegistryAdapter implements RegistryService{
         //增加负载均衡策略
         StrategyFactory loadBalance = new StrategyFactory();
         ServiceInstance<ServiceMeta> instance = loadBalance.createStrategy(serviceInstances);
-//        ServiceInstance<ServiceMeta> instance = (ServiceInstance<ServiceMeta>) serviceInstances.toArray()[0];
         if (null != instance) {
             return instance.getPayload();
         }
